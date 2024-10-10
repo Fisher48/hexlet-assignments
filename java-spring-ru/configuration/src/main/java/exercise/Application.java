@@ -31,7 +31,11 @@ public class Application {
     // END
     @GetMapping("/admins")
     public List<String> showAdmin() {
-        return userProperties.getAdmins().stream().sorted().toList();
+     return Data.getUsers().stream()
+                .filter(user -> userProperties.getAdmins().contains(user.getEmail()))
+                .map(User::getName)
+                .sorted()
+                .toList();
     }
 
     @GetMapping("/users")
