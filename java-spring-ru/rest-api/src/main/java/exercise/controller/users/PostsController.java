@@ -27,14 +27,8 @@ public class PostsController {
     @GetMapping("/users/{id}/posts")
     public List<Post> index(@RequestParam(defaultValue = "1") Integer page,
                             @RequestParam(defaultValue = "10") Integer limit,
-                            @PathVariable int id) {
-        List<Post> foundedPosts = new ArrayList<>();
-        for (Post post : posts) {
-            if (post.getUserId() == id) {
-                foundedPosts.add(post);
-            }
-        }
-        return foundedPosts;
+                            @PathVariable("id") int id) {
+        return posts.stream().skip((page - 1) * limit).limit(limit).filter(p -> p.getUserId() == id).toList();
     }
 
     // Создание нового поста, привязанного к пользователю по `id`. Код должен возвращать статус 201,
@@ -44,12 +38,10 @@ public class PostsController {
     @PostMapping("/users/{id}/posts")
     @ResponseStatus(HttpStatus.CREATED)
     public Post create(@RequestBody Post post,
-                       @PathVariable int id) {
-        if (post.getUserId() == id) {
-            posts.add(post);
-            return post;
-        }
-        return null;
+                       @PathVariable("id") int id) {
+        post.setUserId(id);
+        posts.add(post);
+        return post;
     }
 
 }
