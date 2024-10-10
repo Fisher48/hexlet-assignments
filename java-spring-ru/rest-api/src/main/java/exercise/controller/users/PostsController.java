@@ -1,6 +1,5 @@
 package exercise.controller.users;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -25,10 +24,8 @@ public class PostsController {
 
     // список всех постов, написанных пользователем с таким же `userId`, как `id` в маршруте
     @GetMapping("/users/{id}/posts")
-    public List<Post> index(@RequestParam(defaultValue = "1") Integer page,
-                            @RequestParam(defaultValue = "10") Integer limit,
-                            @PathVariable("id") int id) {
-        return posts.stream().skip((page - 1) * limit).limit(limit).filter(p -> p.getUserId() == id).toList();
+    public List<Post> index(@PathVariable("id") int id) {
+        return posts.stream().filter(p -> p.getUserId() == id).toList();
     }
 
     // Создание нового поста, привязанного к пользователю по `id`. Код должен возвращать статус 201,
