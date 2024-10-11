@@ -42,22 +42,19 @@ public class ProductsController {
     // *PUT /products/{id}* — обновление данных товара
     // BEGIN
     @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Product show(@PathVariable long id) {
         return productRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Product with id " + id + " not found"));
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Optional<Product>> update(@PathVariable long id,
-                                 @RequestBody Product updatedProduct) {
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isPresent()) {
-            updatedProduct.setId(product.get().getId());
-            updatedProduct.setTitle(product.get().getTitle());
-            updatedProduct.setPrice(product.get().getPrice());
-            return ResponseEntity.status(HttpStatus.OK).body(product);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable long id, @RequestBody Product updatedProduct) {
+        productRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Product with id " + id + " not found"));
+        updatedProduct.setId(id);
+        productRepository.save(updatedProduct);
     }
     // END
 
