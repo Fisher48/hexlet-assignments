@@ -39,7 +39,7 @@ public class ProductsController {
         List<Product> products = productRepository.findAll();
         for (Product p : products) {
            if (product.getTitle().equals(p.getTitle()) || product.getPrice() == p.getPrice()) {
-               throw new ResourceAlreadyExistsException("Product already exists");
+               throw new ResourceAlreadyExistsException("ResourceAlreadyExistsException");
            }
            productRepository.save(product);
         }
