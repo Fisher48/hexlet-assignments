@@ -35,18 +35,16 @@ public class ProductsController {
     // BEGIN
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Product> create(@RequestBody Product product) {
-        var newProduct = productRepository.findById(product.getId());
-        if (newProduct.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(product);
-        }
-        return ResponseEntity.of(newProduct);
+    public Product create(@RequestBody Product product) {
+        var newProduct = productRepository.findById(product.getId())
+                .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists"));
+        return productRepository.save(product);
     }
     // END
 
     @GetMapping(path = "/{id}")
     public Product show(@PathVariable long id) {
-        var product =  productRepository.findById(id)
+        var product = productRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
 
         return product;
