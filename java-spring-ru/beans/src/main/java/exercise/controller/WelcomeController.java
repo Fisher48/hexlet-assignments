@@ -13,11 +13,11 @@ public class WelcomeController {
     private Daytime daytime;
 
     @GetMapping(path = "/welcome")
-    public void show() {
+    public String show() {
         if (daytime.getName().equals("day")) {
-            System.out.println("It is day now! Welcome to Spring!");
+            return "It is day now! Welcome to Spring!";
         } else {
-            System.out.println("It is night now! Welcome to Spring!");
+            return "It is night now! Welcome to Spring!";
         }
     }
 }
