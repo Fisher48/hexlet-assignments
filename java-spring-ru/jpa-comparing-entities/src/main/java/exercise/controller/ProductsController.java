@@ -38,11 +38,11 @@ public class ProductsController {
     public void create(@RequestBody Product product) {
         List<Product> products = productRepository.findAll();
         for (Product p : products) {
-           if (product.getTitle().equals(p.getTitle()) && product.getPrice() == p.getPrice()) {
+           if (product.getTitle().equals(p.getTitle()) & product.getPrice() == p.getPrice()) {
                throw new ResourceAlreadyExistsException("ResourceAlreadyExistsException");
            }
-           productRepository.save(product);
         }
+        productRepository.save(product);
     }
     // END
 
