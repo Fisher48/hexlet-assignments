@@ -4,6 +4,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import lombok.EqualsAndHashCode;
@@ -22,8 +23,10 @@ public class Product {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "price")
     private int price;
 }
 // END
