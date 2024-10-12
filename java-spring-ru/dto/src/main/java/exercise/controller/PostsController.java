@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class PostsController {
         dto.setId(post.getId());
         dto.setBody(post.getBody());
         dto.setTitle(post.getTitle());
-        dto.setComments(commentList);
+        dto.setComments(commentList.stream().map(this::toCommentDTO).collect(Collectors.toList()));
         return dto;
     }
 

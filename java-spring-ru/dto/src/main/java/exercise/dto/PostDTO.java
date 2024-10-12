@@ -14,7 +14,7 @@ public class PostDTO {
     private long id;
     private String title;
     private String body;
-    private List<Comment> comments;
+    private List<CommentDTO> comments;
 
 }
 // END
