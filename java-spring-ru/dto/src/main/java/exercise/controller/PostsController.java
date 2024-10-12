@@ -32,7 +32,9 @@ public class PostsController {
         dto.setId(post.getId());
         dto.setBody(post.getBody());
         dto.setTitle(post.getTitle());
-        dto.setComments(commentList.stream().map(this::toCommentDTO).collect(Collectors.toList()));
+        dto.setComments(commentList.stream()
+                .map(this::toCommentDTO)
+                .collect(Collectors.toList()));
         return dto;
     }
 
@@ -53,7 +55,7 @@ public class PostsController {
     @GetMapping(path = "/{id}")
     public PostDTO show(@PathVariable long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post with id" + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Post with id " + id + " not found"));
         List<Comment> comments = commentRepository.findByPostId(id);
         return toPostDTO(post, comments);
     }
