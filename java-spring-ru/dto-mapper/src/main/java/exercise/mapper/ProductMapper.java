@@ -23,7 +23,7 @@ public abstract class ProductMapper {
         @Mapping(target = "barcode", source = "vendorCode")
         public abstract List<ProductDTO> index(List<Product> products);
 
-        @Mapping(target = "price", source = "cost")
+        @Mapping(target = "cost", source = "price")
         public abstract void update(ProductUpdateDTO dto, @MappingTarget Product model);
 
         @Mapping(target = "title", source = "name")
