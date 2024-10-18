@@ -21,9 +21,11 @@ public abstract class TaskMapper {
 
     @Mapping(target = "assignee.id", source = "assigneeId")
     public abstract Task map(TaskCreateDTO dto);
+
     @Mapping(source = "assignee.id", target = "assigneeId")
     public abstract TaskDTO map(Task model);
 
+    @Mapping(target= "assignee", source = "assigneeId", qualifiedByName = "getUserById")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
     @Named("getUserById")
