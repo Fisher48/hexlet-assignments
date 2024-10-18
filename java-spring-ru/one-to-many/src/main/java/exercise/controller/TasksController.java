@@ -1,6 +1,7 @@
 package exercise.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import exercise.dto.TaskCreateDTO;
 import exercise.dto.TaskDTO;
@@ -11,6 +12,7 @@ import exercise.model.Task;
 import exercise.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,10 +88,11 @@ public class TasksController {
 
     // DELETE /tasks/{id} – удаление задачи
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<TaskDTO> delete(@PathVariable long id) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         taskRepository.deleteById(id);
         taskRepository.delete(task);
+        return ResponseEntity.noContent().build();
     }
     // END
 }
