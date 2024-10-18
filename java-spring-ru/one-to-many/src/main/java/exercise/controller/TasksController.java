@@ -65,6 +65,7 @@ public class TasksController {
 
     // POST /tasks – создание новой задачи
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO create(@Valid @RequestBody TaskCreateDTO taskData) {
         var task = taskMapper.map(taskData);
         taskRepository.save(task);
@@ -75,6 +76,7 @@ public class TasksController {
     // При редактировании мы должны иметь возможность поменять название,
     // описание задачи и ответственного разработчика
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public TaskDTO update(@PathVariable long id, @Valid @RequestBody TaskUpdateDTO taskData) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         taskMapper.update(taskData, task);
@@ -84,6 +86,7 @@ public class TasksController {
 
     // DELETE /tasks/{id} – удаление задачи
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable long id) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         taskRepository.deleteById(id);
