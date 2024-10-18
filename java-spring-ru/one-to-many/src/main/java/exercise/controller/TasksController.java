@@ -57,7 +57,7 @@ public class TasksController {
 
     // GET /tasks/{id} – просмотр конкретной задачи
     @GetMapping("/{id}")
-    public TaskDTO show(@PathVariable long id) {
+    public TaskDTO show(@PathVariable Long id) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         var taskDTO = taskMapper.map(task);
         return taskDTO;
@@ -77,7 +77,7 @@ public class TasksController {
     // описание задачи и ответственного разработчика
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TaskDTO update(@PathVariable long id, @Valid @RequestBody TaskUpdateDTO taskData) {
+    public TaskDTO update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO taskData) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         taskMapper.update(taskData, task);
         taskRepository.save(task);
@@ -86,7 +86,6 @@ public class TasksController {
 
     // DELETE /tasks/{id} – удаление задачи
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable long id) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         taskRepository.deleteById(id);
