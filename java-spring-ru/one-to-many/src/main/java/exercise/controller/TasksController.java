@@ -88,10 +88,9 @@ public class TasksController {
 
     // DELETE /tasks/{id} – удаление задачи
     @DeleteMapping("/{id}")
-    public ResponseEntity<TaskDTO> delete(@PathVariable long id) {
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         var task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found"));
         taskRepository.deleteById(id);
-        taskRepository.delete(task);
         return ResponseEntity.noContent().build();
     }
     // END
