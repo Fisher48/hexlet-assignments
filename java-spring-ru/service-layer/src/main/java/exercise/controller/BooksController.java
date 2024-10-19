@@ -28,6 +28,7 @@ public class BooksController {
     // BEGIN
     // GET /books – просмотр списка всех книг
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<BookDTO> index() {
         return bookService.getAll();
     }

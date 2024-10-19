@@ -34,7 +34,7 @@ public class AuthorsController {
 
     // GET /authors – просмотр списка всех авторов
     @GetMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public List<AuthorDTO> index() {
         return authorService.getAll();
     }
