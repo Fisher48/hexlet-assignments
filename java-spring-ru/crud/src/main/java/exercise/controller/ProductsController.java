@@ -58,9 +58,11 @@ public class ProductsController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO create(@Valid @RequestBody ProductCreateDTO createDTO) {
-        var product = productMapper.map(createDTO);
-        var dto = productRepository.save(product);
-        return productMapper.map(dto);
+        categoryRepository.findById(createDTO.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Wrong category"));
+        var entity = productMapper.map(createDTO);
+        productRepository.save(entity);
+        return productMapper.map(entity);
     }
 
     // PUT /products/{id} – редактирование товара.
