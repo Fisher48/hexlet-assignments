@@ -56,7 +56,7 @@ public class ProductsController {
     // POST /products – добавление нового товара.
     // При указании id несуществующей категории должен вернуться ответ с кодом 400 Bad request
     @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public ProductDTO create(@Valid @RequestBody ProductCreateDTO createDTO) {
         categoryRepository.findById(createDTO.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Wrong category"));
