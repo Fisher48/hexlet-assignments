@@ -15,12 +15,12 @@ import org.mapstruct.*;
 public abstract class AuthorMapper {
 
     // BEGIN
-    @Mapping(target = "authorFirstName", source = "firstName")
-    @Mapping(target = "authorLastName", source = "lastName")
-    public abstract Author map(AuthorCreateDTO createDTO);
-
     @Mapping(target = "firstName", source = "authorFirstName")
     @Mapping(target = "lastName", source = "authorLastName")
+    public abstract Author map(AuthorCreateDTO createDTO);
+
+    @Mapping(target = "authorFirstName", source = "firstName")
+    @Mapping(target = "authorLastName", source = "lastName")
     public abstract AuthorDTO map(Author model);
     // END
 

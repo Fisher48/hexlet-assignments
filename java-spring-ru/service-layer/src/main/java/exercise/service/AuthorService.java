@@ -52,7 +52,9 @@ public class AuthorService {
     }
 
     public void delete(Long id) {
-        authorRepository.deleteById(id);
+        var author = authorRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Author not found"));
+        authorRepository.delete(author);
     }
 
     // END
