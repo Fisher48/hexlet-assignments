@@ -60,7 +60,7 @@ public class ProductsController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO create(@Valid @RequestBody ProductCreateDTO createDTO) {
         categoryRepository.findById(createDTO.getCategoryId())
-                .orElseThrow(() -> new BadRequestException("Bad request"));
+                .orElseThrow(() -> new BadRequestException(""));
         var entity = productMapper.map(createDTO);
         productRepository.save(entity);
         return productMapper.map(entity);
