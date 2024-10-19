@@ -3,7 +3,6 @@ package exercise.service;
 import exercise.dto.BookCreateDTO;
 import exercise.dto.BookDTO;
 import exercise.dto.BookUpdateDTO;
-import exercise.exception.ConstraintViolationException;
 import exercise.exception.ResourceNotFoundException;
 import exercise.mapper.BookMapper;
 import exercise.repository.AuthorRepository;
@@ -47,7 +46,7 @@ public class BookService {
 
     public BookDTO update(BookUpdateDTO updateDTO, Long id) {
         authorRepository.findById(id).orElseThrow(
-                () -> new ConstraintViolationException("Bad request"));
+                () -> new ResourceNotFoundException("Bad request"));
         var book = bookRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Book not found"));
         bookMapper.update(updateDTO, book);
