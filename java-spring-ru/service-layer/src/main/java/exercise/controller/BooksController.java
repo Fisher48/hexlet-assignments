@@ -44,7 +44,7 @@ public class BooksController {
     // При указании id несуществующего автора должен вернуться ответ с кодом 400 Bad request
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO create(@Valid @RequestBody BookCreateDTO createDTO) {
+    public BookDTO create(@RequestBody @Valid BookCreateDTO createDTO) {
         return bookService.create(createDTO);
     }
 
@@ -53,7 +53,8 @@ public class BooksController {
     // При указании id несуществующего автора также должен вернуться ответ с кодом 400 Bad request
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO update(@PathVariable Long id, @Valid @RequestBody BookUpdateDTO updateDTO) {
+    public BookDTO update(@PathVariable Long id,
+                          @RequestBody @Valid BookUpdateDTO updateDTO) {
         return bookService.update(updateDTO, id);
     }
 

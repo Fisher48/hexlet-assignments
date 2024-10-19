@@ -46,10 +46,10 @@ public class BookService {
     }
 
     public BookDTO update(BookUpdateDTO updateDTO, Long id) {
+        authorRepository.findById(id).orElseThrow(
+                () -> new BadRequestException("Bad request"));
         var book = bookRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Book not found"));
-        authorRepository.findById(book.getAuthor().getId()).orElseThrow(
-                () -> new BadRequestException("Bad request"));
         bookMapper.update(updateDTO, book);
         bookRepository.save(book);
         return bookMapper.map(book);

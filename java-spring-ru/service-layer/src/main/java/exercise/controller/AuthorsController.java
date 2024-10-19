@@ -3,12 +3,9 @@ package exercise.controller;
 import exercise.dto.AuthorDTO;
 import exercise.dto.AuthorCreateDTO;
 import exercise.dto.AuthorUpdateDTO;
-import exercise.repository.AuthorRepository;
 import exercise.service.AuthorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -50,14 +46,16 @@ public class AuthorsController {
     // POST /authors – добавление нового автора
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AuthorDTO create(@Valid @RequestBody AuthorCreateDTO createDTO) {
+    public AuthorDTO create(@RequestBody @Valid AuthorCreateDTO createDTO) {
         return authorService.create(createDTO);
     }
 
-    // PUT /authors/{id} – редактирование автора. При редактировании мы должны иметь возможность поменять имя и фамилию
+    // PUT /authors/{id} – редактирование автора.
+    // При редактировании мы должны иметь возможность поменять имя и фамилию
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorDTO update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDTO updateDTO) {
+    public AuthorDTO update(@PathVariable Long id,
+                            @RequestBody @Valid AuthorUpdateDTO updateDTO) {
        return authorService.update(id, updateDTO);
     }
 
