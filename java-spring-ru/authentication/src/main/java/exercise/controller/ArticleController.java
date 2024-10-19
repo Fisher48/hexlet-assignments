@@ -44,11 +44,13 @@ public class ArticleController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     ArticleDTO create(@RequestBody @Valid ArticleCreateDTO createDTO) {
-        var article = articleMapper.map(createDTO);
-        articleRepository.save(article);
-        var user = userUtils.getCurrentUser();
-        article.setAuthor(user);
-        return articleMapper.map(article);
+        var currentUser = userUtils.getCurrentUser();
+        userRepository.findByEmail(currentUser.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("Not found"));
+        var dto = articleMapper.map(createDTO);
+        dto.setAuthor(currentUser);
+        articleRepository.save(dto);
+        return articleMapper.map(dto);
     }
     // END
 
