@@ -3,13 +3,11 @@ package exercise.mapper;
 import exercise.dto.ProductCreateDTO;
 import exercise.dto.ProductDTO;
 import exercise.dto.ProductUpdateDTO;
+import exercise.model.Category;
 import exercise.model.Product;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import exercise.repository.CategoryRepository;
+import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -22,6 +20,9 @@ import java.util.List;
 )
 public abstract class ProductMapper {
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Mapping(target = "category.id", source = "categoryId")
     public abstract Product map(ProductCreateDTO createDTO);
 
@@ -29,8 +30,17 @@ public abstract class ProductMapper {
     @Mapping(target = "categoryName", source = "category.name")
     public abstract ProductDTO map(Product product);
 
-    @Mapping(target = "category", source = "categoryId")
+    @Mapping(target = "category", source = "categoryId",qualifiedByName = "getCategoryById")
     public abstract void update(ProductUpdateDTO updateDTO, @MappingTarget Product model);
+
+    @Named("getCategoryById")
+    public Category getCategoryById(Long id) {
+        if (id == null) {
+            return null;
+        } else {
+            return categoryRepository.findById(id).orElse(null);
+        }
+    }
 
 
 }
