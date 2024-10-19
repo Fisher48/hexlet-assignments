@@ -22,10 +22,11 @@ import java.util.List;
 )
 public abstract class ProductMapper {
 
-    @Mapping(target = "category", source = "categoryId")
+    @Mapping(target = "category.id", source = "categoryId")
     public abstract Product map(ProductCreateDTO createDTO);
 
     @Mapping(target = "categoryId", source = "category.id")
+    @Mapping(target = "categoryName", source = "category.name")
     public abstract ProductDTO map(Product product);
 
     @Mapping(target = "category", source = "categoryId")

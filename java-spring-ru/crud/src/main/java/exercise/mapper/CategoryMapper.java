@@ -18,9 +18,9 @@ import org.mapstruct.ReportingPolicy;
 )
 public abstract class CategoryMapper {
 
-    public abstract Category map(CategoryCreateDTO categoryCreateDTO);
+    public abstract Category map(CategoryCreateDTO createDTO);
 
-    public abstract CategoryDTO map(Category category);
+    public abstract CategoryDTO map(Category model);
 
 
 }
