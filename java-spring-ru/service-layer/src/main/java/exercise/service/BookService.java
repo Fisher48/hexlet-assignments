@@ -34,6 +34,8 @@ public class BookService {
     }
 
     public BookDTO create(BookCreateDTO createDTO) {
+        authorRepository.findById(createDTO.getAuthorId()).orElseThrow(
+                () -> new BadRequestException("Bad request"));
         var book = bookMapper.map(createDTO);
         bookRepository.save(book);
         return bookMapper.map(book);
