@@ -5,6 +5,7 @@ import java.util.List;
 import exercise.dto.ProductCreateDTO;
 import exercise.dto.ProductDTO;
 import exercise.dto.ProductUpdateDTO;
+import exercise.exception.BadRequestException;
 import exercise.mapper.ProductMapper;
 import exercise.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +57,10 @@ public class ProductsController {
     // POST /products – добавление нового товара.
     // При указании id несуществующей категории должен вернуться ответ с кодом 400 Bad request
     @PostMapping("")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO create(@Valid @RequestBody ProductCreateDTO createDTO) {
         categoryRepository.findById(createDTO.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Wrong category"));
+                .orElseThrow(() -> new BadRequestException("Bad request"));
         var entity = productMapper.map(createDTO);
         productRepository.save(entity);
         return productMapper.map(entity);
